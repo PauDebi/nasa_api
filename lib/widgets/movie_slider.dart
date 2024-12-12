@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+import 'package:nasa_api/models/dailyApiResponse.dart';
+
+class FactsSlider extends StatelessWidget {
+  final List<DailyApiResonse> responses;
+
+  const FactsSlider({Key? key, required this.responses}) : super(key: key);
+  
+  
+
+  @override
+  Widget build(BuildContext context) {
+    if (this.responses.length == 0) {
+      return Container(
+        width: double.infinity,
+        height: 260,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+    return Container(
+      width: double.infinity,
+      height: 260,
+      // color: Colors.red,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text('Random Facts',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Expanded(
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 20,
+                itemBuilder: (_, int index) => _MoviePoster(info: responses[index])),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _MoviePoster extends StatelessWidget {
+  final DailyApiResonse info;
+  const _MoviePoster({Key? key, required this.info}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 130,
+      height: 190,
+      // color: Colors.green,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, 'details',
+                arguments: info),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/loading.gif'),
+                image: NetworkImage(_getValidImageUrl(info)),
+                width: 130,
+                height: 180,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            info.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
+    );
+  }
+  
+  String _getValidImageUrl(DailyApiResonse info) {
+
+    if (info.url != null && (info.url!.endsWith('.jpg') || info.url!.endsWith('.png'))) {
+      return info.url!;
+    }
+    return info.thumbnailUrl ?? 'assets/no-image.jpg';
+  }
+}
