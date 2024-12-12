@@ -4,10 +4,12 @@ import 'package:nasa_api/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -17,11 +19,13 @@ class MainApp extends StatelessWidget {
           lazy: false,
         )
       ],
-      child: MyApp(),
+      child: const MyApp(),
     );
   }
 }
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,8 +33,8 @@ class MyApp extends StatelessWidget {
       title: 'Nasa\'s Daily Facts',
       initialRoute: 'home',
       routes: {
-        'home': (BuildContext context) => HomeScreen(),
-        'details': (BuildContext context) => DetailsScreen(),
+        'home': (BuildContext context) => const HomeScreen(),
+        'details': (BuildContext context) => const DetailsScreen(),
       },
       theme: ThemeData.light()
           .copyWith(appBarTheme: const AppBarTheme(color: Colors.indigo)),

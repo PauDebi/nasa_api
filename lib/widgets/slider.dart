@@ -10,11 +10,11 @@ class FactsSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (this.responses.length == 0) {
+    if (this.responses.isEmpty) {
       return Container(
         width: double.infinity,
         height: 260,
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(),
         ),
       );
@@ -26,12 +26,12 @@ class FactsSlider extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text('Random Facts',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Expanded(
@@ -48,7 +48,7 @@ class FactsSlider extends StatelessWidget {
 
 class _MoviePoster extends StatelessWidget {
   final DailyApiResonse info;
-  const _MoviePoster({Key? key, required this.info}) : super(key: key);
+  const _MoviePoster({required this.info});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class _MoviePoster extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
-                placeholder: AssetImage('assets/loading.gif'),
+                placeholder: const AssetImage('assets/loading.gif'),
                 image: NetworkImage(_getValidImageUrl(info)),
                 width: 130,
                 height: 180,

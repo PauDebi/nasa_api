@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:nasa_api/models/models.dart';
 
 class DetailsScreen extends StatelessWidget {
+  const DetailsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final DailyApiResonse? info = ModalRoute.of(context)?.settings.arguments as DailyApiResonse?;
     if (info == null) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(child: Text('Error: No data received.')),
       );
     }
@@ -38,7 +40,7 @@ class DetailsScreen extends StatelessWidget {
 class _CustomAppBar extends StatelessWidget {
   final DailyApiResonse info;
   
-  _CustomAppBar({Key? key, required this.info}) : super(key: key);
+  const _CustomAppBar({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,28 +52,28 @@ class _CustomAppBar extends StatelessWidget {
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        titlePadding: EdgeInsets.all(0),
+        titlePadding: const EdgeInsets.all(0),
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
           color: Colors.black12,
           padding: const EdgeInsets.only(bottom: 10),
           child: Container(
-            padding: EdgeInsets.all(3), // Espaciado interno
+            padding: const EdgeInsets.all(3), // Espaciado interno
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.7), // Color translúcido
               borderRadius: BorderRadius.circular(12), // Bordes redondeados
             ),
             child: Text(
               info.title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black), // Asegúrate de que el texto sea legible
             ),
           ),
         ),
         background: FadeInImage(
-          placeholder: AssetImage('assets/loading.gif'),
+          placeholder: const AssetImage('assets/loading.gif'),
           image: _getImageProvider(info),
           fit: BoxFit.cover,
         ),
@@ -82,7 +84,7 @@ class _CustomAppBar extends StatelessWidget {
 
 class _PosterAndTitile extends StatelessWidget {
   final DailyApiResonse info;
-  const _PosterAndTitile({Key? key, required this.info}) : super(key: key);
+  const _PosterAndTitile({required this.info});
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +108,8 @@ class _PosterAndTitile extends StatelessWidget {
                     "Copyright: ${info.copyright!}",
                     style: textTheme.titleMedium,
                   ),
-                if (info.mediaType != MediaType.IMAGE)
-                  Container(
+                if (info.mediaType != MediaType.IMAGE && info.url != null)
+                  SizedBox(
                     width: 180,
                     child: 
                       Text(
@@ -122,19 +124,21 @@ class _PosterAndTitile extends StatelessWidget {
             const SizedBox(
               width: 20
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder: AssetImage('assets/loading.gif'),
-                image: _getImageProvider(info),
-                height: 150,
-                width: 200,
-                fit: BoxFit.cover,
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: const AssetImage('assets/loading.gif'),
+                  image: _getImageProvider(info),
+                  height: 150,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
+            )
           ],)
         ),
-        Container(
+        const SizedBox(
           width: double.infinity,
           height: 20,
         ),
@@ -146,7 +150,7 @@ class _PosterAndTitile extends StatelessWidget {
 
 class _Overview extends StatelessWidget {
   final DailyApiResonse info;
-  const _Overview({Key? key, required this.info}) : super(key: key);
+  const _Overview({required this.info});
   @override
   Widget build(BuildContext context) {
     return
@@ -173,7 +177,7 @@ Widget _getTitle(BuildContext context, TextTheme textTheme, DailyApiResonse? inf
           width: double.infinity,
           height: 20,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               colors: [Colors.black87, Colors.black54],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -194,7 +198,7 @@ Widget _getTitle(BuildContext context, TextTheme textTheme, DailyApiResonse? inf
           width: double.infinity,
           height: 20,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               colors: [Colors.black87, Colors.black54],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
@@ -218,5 +222,5 @@ ImageProvider _getImageProvider(DailyApiResonse info) {
   if (info.thumbnailUrl != null && (info.thumbnailUrl!.endsWith('.jpg') || info.thumbnailUrl!.endsWith('.png'))) {
     return NetworkImage(info.thumbnailUrl!);
   }
-  return AssetImage('assets/no-image.jpg');
+  return const AssetImage('assets/noImage.png');
 }

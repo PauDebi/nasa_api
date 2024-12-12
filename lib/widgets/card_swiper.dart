@@ -5,23 +5,23 @@ import 'package:nasa_api/models/models.dart';
 class CardSwiper extends StatelessWidget {
   final List<DailyApiResonse> responses;
 
-  CardSwiper({Key? key, required this.responses}) : super(key: key);
+  const CardSwiper({super.key, required this.responses});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     if (responses.isEmpty) {
-      return Container(
+      return SizedBox(
         width: double.infinity,
         height: size.height * 0.5,
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(),
         ),
       );
     }
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: size.height * 0.5,
       child: Swiper(
@@ -40,7 +40,7 @@ class CardSwiper extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: FadeInImage(
-                    placeholder: AssetImage('assets/loading.gif'),
+                    placeholder: const AssetImage('assets/loading.gif'),
                     image: imageUrl.startsWith('http')
                         ? NetworkImage(imageUrl)
                         : AssetImage(imageUrl) as ImageProvider,
@@ -62,6 +62,6 @@ class CardSwiper extends StatelessWidget {
     if (info.url != null && (info.url!.endsWith('.jpg') || info.url!.endsWith('.png'))) {
       return info.url!;
     }
-    return info.thumbnailUrl ?? 'assets/no-image.jpg';
+    return info.thumbnailUrl ?? 'assets/noImage.png';
   }
 }
