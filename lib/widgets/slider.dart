@@ -37,7 +37,7 @@ class FactsSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
+                itemCount: responses.length,
                 itemBuilder: (_, int index) => _MoviePoster(info: responses[index])),
           )
         ],
@@ -66,7 +66,7 @@ class _MoviePoster extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
                 placeholder: const AssetImage('assets/loading.gif'),
-                image: NetworkImage(_getValidImageUrl(info)),
+                image: _getValidImageUrl(info),
                 width: 130,
                 height: 180,
                 fit: BoxFit.cover,
@@ -87,11 +87,15 @@ class _MoviePoster extends StatelessWidget {
     );
   }
   
-  String _getValidImageUrl(DailyApiResonse info) {
+  ImageProvider<Object> _getValidImageUrl(DailyApiResonse info) {
 
     if (info.url != null && (info.url!.endsWith('.jpg') || info.url!.endsWith('.png'))) {
-      return info.url!;
+      return NetworkImage(info.url!);
     }
-    return info.thumbnailUrl ?? 'assets/no-image.jpg';
+    if (info.thumbnailUrl != null && (info.thumbnailUrl!.endsWith('.jpg') || info.thumbnailUrl!.endsWith('.png'))) {
+      return NetworkImage(info.thumbnailUrl!);
+    }
+    return const AssetImage('assets/noImage.png');
+    
   }
 }
