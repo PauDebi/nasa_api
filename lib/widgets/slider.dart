@@ -37,7 +37,7 @@ class FactsSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
+                itemCount: responses.length,
                 itemBuilder: (_, int index) => _MoviePoster(info: responses[index])),
           )
         ],
@@ -92,6 +92,6 @@ class _MoviePoster extends StatelessWidget {
     if (info.url != null && (info.url!.endsWith('.jpg') || info.url!.endsWith('.png'))) {
       return info.url!;
     }
-    return info.thumbnailUrl ?? 'assets/no-image.jpg';
+    return info.thumbnailUrl ?? 'assets/noImage.jpg';
   }
 }

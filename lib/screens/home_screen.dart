@@ -15,6 +15,14 @@ class HomeScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                Navigator.pushNamed(context, 'search');
+              },
+            ),
+          ],
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -40,6 +48,7 @@ class HomeScreen extends StatelessWidget {
           centerTitle: true,
           elevation: 8,
           shadowColor: Colors.black45,
+          
         ),
       ),
       body: SingleChildScrollView(

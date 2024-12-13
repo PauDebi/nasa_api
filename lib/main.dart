@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nasa_api/providers/daily_nasa_provider.dart';
 import 'package:nasa_api/screens/screens.dart';
+import 'package:nasa_api/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (BuildContext context) => const HomeScreen(),
         'details': (BuildContext context) => const DetailsScreen(),
+        'search': (BuildContext context) => SearchScreen(),
       },
       theme: ThemeData.light()
           .copyWith(appBarTheme: const AppBarTheme(color: Colors.indigo)),

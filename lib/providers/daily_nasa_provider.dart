@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
 import 'package:nasa_api/models/models.dart';
+import 'package:nasa_api/models/searchModels/colection.dart';
+import 'package:nasa_api/models/searchModels/item.dart';
 
 class DailyNasaProvider extends ChangeNotifier{
 
@@ -9,6 +13,7 @@ class DailyNasaProvider extends ChangeNotifier{
 
   List<DailyApiResonse> lastDailyFacts = [];
   List<DailyApiResonse> randomFacts = [];
+  List<Item> searchResults = [];
 
   DailyNasaProvider(){
     getDailyFacts();
@@ -58,5 +63,25 @@ class DailyNasaProvider extends ChangeNotifier{
     randomFacts = randomApiResonse.results;
     notifyListeners();
   }
+
+void updateSearchResults(Map<String, String> parameters) async {
+  try {
+    var url = Uri.https('images-api.nasa.gov', '/search', parameters);
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      print('JSON Response: $jsonResponse'); // Para depuración
+      final collection = Collection.fromJson(jsonResponse);
+      searchResults = collection.items ?? [];
+      notifyListeners();
+    } else {
+      print('Error en la petición: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error al obtener los resultados de búsqueda: $e');
+  }
+}
 
 }
