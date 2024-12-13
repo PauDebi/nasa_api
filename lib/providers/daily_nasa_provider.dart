@@ -38,17 +38,11 @@ class DailyNasaProvider extends ChangeNotifier{
   }
 
   void getRandomFacts() async {
-    DateTime now = DateTime.now();
-    DateTime randomDate = now.subtract(Duration(days: (now.difference(DateTime(2015, 1, 1)).inDays * (DateTime.now().millisecondsSinceEpoch % 100) ~/ 100)));
-    DateTime limitDate = randomDate.subtract(const Duration(days: 50));
-    String lastDate = "${randomDate.year}-${randomDate.month}-${randomDate.day}";
-    String firstDate = "${limitDate.year}-${limitDate.month}-${limitDate.day}";
     String thumbs = "true";
 
     var url = Uri.https(_baseUrl, '/planetary/apod', {
       'api_key': _apiKey,
-      'start_date': firstDate,
-      'end_date': lastDate,
+      'count': '50',
       'thumbs': thumbs,
     });
 
